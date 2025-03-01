@@ -33,4 +33,5 @@ PHASE 4 Testing: test all connection, how works the keylogger, repair any bugs, 
   -Fix any bug founded
 
 PHASE 6 Clean up:. After establish the connection, the port should close and delete any registry from infected pc or clean up any registry (not started)
+  
   -Document all the results and changes for investigation purpose
