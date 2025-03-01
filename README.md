@@ -2,13 +2,13 @@
 This is a open-source project, any bad use of this program I'm not responsible for it.
 All this script is for try to document how cybercriminals develops the malware and test all the phases of infect 
 a PC or server, and how it collects information about passwords, usernames and emails, using social engeniering.
-
+I'm open and happy to recieve any recomendation.
 === Modules for use ===
-pynput
-logging
-thread
-os
-winreg
+- pynput
+- logging
+- thread
+- os
+- winreg or schtasks
 
 === Steps for planning ===
 
