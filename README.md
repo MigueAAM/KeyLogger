@@ -1,6 +1,6 @@
 !Disclamer:
 
-This is a open-source project, any bad use of this program I'm not responsible for it.
+This is a open-source project, I'm not responsible for any non-ethical use of this script.
 All this script is for try to document how cybercriminals develops the malware and test all the phases of infect 
 a PC or server, and how it collects information about passwords, usernames and emails, using social engeniering.
 
