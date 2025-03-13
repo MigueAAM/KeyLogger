@@ -26,7 +26,7 @@ Features of Phase 1:
     
 PHASE 2 Connection: Estabish a connection using a reversal connection for transfer the .txt file to the attacker (not started) 
   
-  - Investigate about paramiko and connections
+  - Investigate about paramiko and reverse shell connections
 
 PHASE 3 delivery: use obfuscation techniques for hide the keylogger into a image, pdf or docx. (not started)
   
