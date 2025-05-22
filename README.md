@@ -2,7 +2,7 @@
 # KeyLogger
 <p>Copyright (c) 2025 all rights reserved</p>
 
-# !Disclamer
+# Disclamer:
 <p>
 This is a open-source project, I'm not responsible for any non-ethical use of this script.
 All this script is for try to document how cybercriminals develops the malware and test all the phases of infect 
