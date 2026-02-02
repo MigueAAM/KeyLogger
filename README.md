@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 # KeyLogger
-<p>Copyright (c) 2025 all rights reserved</p>
 
 # Disclamer:
 <p>
